@@ -11,6 +11,22 @@ class IndecisionApp extends React.Component {
         }
     }
 
+    UNSAFE_componentWillMount() {
+        console.log("IndecesionApp will mount!");
+    }
+
+    componentDidMount() {
+        console.log("IndecesionApp did mount!");
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("IndecesionApp did update!");
+    }
+
+    componentWillUnmount() {
+        console.log("IndecesionApp will unmount!");
+    }
+
     handleDeleteOptions() {
         this.setState(() => ({options:[]}));
     }
@@ -99,6 +115,11 @@ class Options extends React.Component {
 };
 
 class Option extends React.Component {
+
+    componentWillUnmount() {
+        console.log(`Option ${this.props.Optiontext} will unmount!`);
+    }
+
     render() {
         return (
             <li>
