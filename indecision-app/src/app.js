@@ -16,11 +16,13 @@ class IndecisionApp extends React.Component {
     }
 
     componentDidMount() {
-        console.log("IndecesionApp did mount!");
+        this.setState(() => ({options: JSON.parse(localStorage.getItem('options')) || []}));
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("IndecesionApp did update!");
+        if (prevState.options.length !== this.state.options.length) {
+            localStorage.setItem('options', JSON.stringify(this.state.options));
+        }
     }
 
     componentWillUnmount() {
@@ -105,6 +107,7 @@ class Options extends React.Component {
         return (
             <div>
                 <p>{`Number of options: ${this.props.options.length}`}</p>
+                {this.props.options.length===0 && (<p>Please enter some options to get started!</p>)}
                 <button onClick={this.props.handleDeleteOptions}>Remove all</button>
                 <ol>
                 {this.props.options.map(option => <Option Optiontext={option} key={option} handleDeleteOption={this.props.handleDeleteOption}/>)}
@@ -124,6 +127,7 @@ class Option extends React.Component {
         return (
             <li>
                 {this.props.Optiontext}
+                {" "}
                 <button onClick={() => {this.props.handleDeleteOption(this.props.Optiontext)}}>Remove</button>
             </li>
         );
@@ -144,7 +148,10 @@ class AddOption extends React.Component {
         const option = event.target.elements.option.value.trim();
         const error = this.props.handleAddOption(option);
         this.setState(()=> ({error: error}));
-        event.target.elements.option.value ='';
+        if (!error) {
+            event.target.elements.option.value ='';
+        }
+
     }
 
     render() {
