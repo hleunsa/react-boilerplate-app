@@ -14,10 +14,18 @@ yarn install
 
 - babel compilation and watch
 ```
+yarn build
+```
+or
+```
 babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
 ```
 
 - launch live-server
+```
+yarn serve
+```
+or
 ```
 live-server public/
 ```
