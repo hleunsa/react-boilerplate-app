@@ -12,8 +12,12 @@
 yarn install
 ```
 
+- compilation and run dev-server with webpack
+```
+yarn dev-server
+```
 
-- babel compilation and watch
+- babel compilation and watch only
 
   - with webpack
 	```
@@ -29,7 +33,7 @@ yarn install
 	babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
 	```
 
-- launch live-server
+- launch live-server only
 ```
 yarn serve
 ```
