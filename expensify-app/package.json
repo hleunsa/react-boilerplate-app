@@ -24,6 +24,7 @@
     "react": "16.10.2",
     "react-dom": "16.10.2",
     "react-modal": "^3.10.1",
+    "react-router-dom": "^5.1.2",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "validator": "11.1.0",
