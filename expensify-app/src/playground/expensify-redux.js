@@ -3,8 +3,7 @@ import uuid from 'uuid';
 import { cpus } from 'os';
 
 // ADD_EXPENSE
-const addExpense = (
-    {
+const addExpense = ({
         description = '',
         note = '',
         amount = 0,
@@ -28,11 +27,37 @@ const removeExpense = (id) => ({
 });
 
 // EDIT_EXPENSE
+const editExpense = (id, updates) => ({
+    type: 'EDIT_EXPENSE',
+    id,
+    updates
+});
+
 // SET_TEXT_FILTER
+const setTextFilter = (text = '') => ({
+    type: 'SET_TEXT_FILTER',
+    text
+});
+
 // SORT_BY_DATE
+const sortByDate = () => ({ type: 'SORT_BY_DATE' });
+
 // SORT_BY_AMOUNT
+const sortByAmout = () => ({ type: 'SORT_BY_AMOUNT' });
+
 // SET_START_DATE
+const setFilterStartDate = (startDate) => ({
+    type: 'SET_START_DATE',
+    startDate
+
+});
+
 // SET_END_DATE
+const setFilterEndDate = (endDate) => ({
+    type: 'SET_END_DATE',
+    endDate
+
+});
 
 // Expenses Reducer
 
@@ -47,6 +72,14 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
             ];
         case 'REMOVE_EXPENSE':
             return state.filter(({id}) => id !== action.id);
+        case 'EDIT_EXPENSE':
+            return state.map((expense) => {
+                if (expense.id === action.id){
+                    return { ...expense, ...action.updates};
+                } else {
+                    return expense;
+                }
+            });
         default:
             return state;
     }
@@ -61,6 +94,16 @@ const filtersReducerDefaultState =  {
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {
     switch (action.type) {
+        case 'SET_TEXT_FILTER':
+            return { ...state, text: action.text};
+        case 'SORT_BY_DATE':
+            return { ...state, sortBy: 'date' };
+        case 'SORT_BY_AMOUNT':
+            return { ...state, sortBy: 'amount' };
+        case 'SET_START_DATE':
+            return { ...state, startDate: action.startDate };
+        case 'SET_END_DATE':
+            return { ...state, endDate: action.endDate };
         default:
             return state;
     }
@@ -89,6 +132,16 @@ const expenseTwo = store.dispatch(addExpense({
 }));
 
 store.dispatch(removeExpense(expenseOne.expense.id));
+store.dispatch(editExpense(expenseTwo.expense.id, { amount: 5}));
+
+store.dispatch(setTextFilter("rent"));
+store.dispatch(setTextFilter());
+
+store.dispatch(sortByAmout());
+store.dispatch(sortByDate());
+
+store.dispatch(setFilterStartDate(123));
+store.dispatch(setFilterEndDate(4754));
 
 const demoState = {
     expenses: [
