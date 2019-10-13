@@ -14,8 +14,8 @@ import './styles/styles.scss';
 const store = configureStore();
 
 store.dispatch(addExpense({description: 'Water bill', amount : 500, createdAt : 12}));
-store.dispatch(addExpense({ description: 'Gas bill', amount : 1000, createdAt : 5}));
-store.dispatch(addExpense({ description: 'Restaurant', amount : 50, createdAt : 24}));
+store.dispatch(addExpense({ description: 'Gas bill', amount : 1000, createdAt : 24}));
+store.dispatch(addExpense({ description: 'Restaurant', amount : 50, createdAt : 5}));
 
 
 const jsx = (
