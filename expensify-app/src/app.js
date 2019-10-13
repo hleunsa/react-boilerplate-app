@@ -20,14 +20,8 @@ store.dispatch(setTextFilter('bill'));
 
 setTimeout(() => {
         store.dispatch(setTextFilter('tau'));
-    },
-    3000);
+    }, 3000);
 
-
-
-const {expenses, filters} = store.getState();
-const visibleExpenses =  getVisibleExpenses(expenses, filters);
-console.log(visibleExpenses);
 
 const jsx = (
     <Provider store={store}>
