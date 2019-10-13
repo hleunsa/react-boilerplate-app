@@ -13,14 +13,9 @@ import './styles/styles.scss';
 
 const store = configureStore();
 
-store.dispatch(addExpense({description: 'Water bill'}));
-store.dispatch(addExpense({ description: 'Gas bill'}));
-store.dispatch(addExpense({ description: 'Restaurant'}));
-store.dispatch(setTextFilter('bill'));
-
-setTimeout(() => {
-        store.dispatch(setTextFilter('tau'));
-    }, 3000);
+store.dispatch(addExpense({description: 'Water bill', amount : 500, createdAt : 12}));
+store.dispatch(addExpense({ description: 'Gas bill', amount : 1000, createdAt : 5}));
+store.dispatch(addExpense({ description: 'Restaurant', amount : 50, createdAt : 24}));
 
 
 const jsx = (

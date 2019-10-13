@@ -8,7 +8,7 @@ export const setTextFilter = (text = '') => ({
 export const sortByDate = () => ({ type: 'SORT_BY_DATE' });
 
 // SORT_BY_AMOUNT
-export const sortByAmout = () => ({ type: 'SORT_BY_AMOUNT' });
+export const sortByAmount = () => ({ type: 'SORT_BY_AMOUNT' });
 
 // SET_START_DATE
 export const setFilterStartDate = (startDate) => ({
