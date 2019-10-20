@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-const Headers = () => (
+const Header = () => (
     <header>
         <h1>Expensify</h1>
         <h2><NavLink to="/" activeClassName="is-active" exact={true} >Home</NavLink></h2>
@@ -10,4 +10,4 @@ const Headers = () => (
     </header>
 );
 
-export default Headers;
+export default Header;

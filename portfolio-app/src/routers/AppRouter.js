@@ -5,12 +5,12 @@ import PortfolioHomePage from '../components/PortfolioHomePage';
 import PortfolioDetailsPage from '../components/PortfolioDetailsPage';
 import ContactPage from '../components/ContactPage';
 import NotFoundPage from '../components/NotFoundPage';
-import Headers from '../components/Headers';
+import Header from '../components/Header';
 
 const AppRouter = () => (
     <BrowserRouter>
         <div>
-            <Headers/>
+            <Header/>
             <Switch>
                 <Route path="/" component={HomePage} exact={true} />
                 <Route path="/portfolio" component={PortfolioHomePage} exact={true} />
