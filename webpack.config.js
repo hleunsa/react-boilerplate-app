@@ -6,15 +6,13 @@ module.exports = (env) => {
     return {
         entry: './src/app.js',
         output: {
-            path: path.resolve(__dirname, 'public'),
+            path: path.resolve(__dirname, 'public', 'dist'),
             filename: 'bundle.js'
         },
         plugins: [
           new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: !isProduction ? '[name].css' : '[name].[hash].css',
-            chunkFilename: !isProduction ? '[id].css' : '[id].[hash].css',
+            filename: 'styles.css'
           }),
         ],
         module:{
@@ -57,7 +55,8 @@ module.exports = (env) => {
         devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
         devServer: {
             contentBase: path.resolve(__dirname, 'public'),
-            historyApiFallback: true
+            historyApiFallback: true,
+            publicPath: '/dist/'
         }
     };
 };

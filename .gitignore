@@ -11,11 +11,7 @@
 
 # production
 /build
-
-public/bundle.js
-public/bundle.js.map
-public/main.*.css
-public/main.*.css.map
+/public/dist
 
 # misc
 .DS_Store
