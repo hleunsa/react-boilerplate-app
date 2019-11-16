@@ -1,31 +1,63 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
-    entry: './src/app.js',
-    output: {
-        path: path.resolve(__dirname, 'public'),
-        filename: 'bundle.js'
-    },
-    module:{
-        rules:[
-            {
-                loader: 'babel-loader',
-                test:/\.js$/,
-                exclude: /node_modules/
-            },
-            {
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ],
-                test:/\.s?css$/
-            }
-        ]
-    },
-    devtool: 'cheap-module-eval-source-map',
-    devServer: {
-        contentBase: path.resolve(__dirname, 'public'),
-        historyApiFallback: true
-    }
+module.exports = (env) => {
+    const isProduction = env === 'production';
+    return {
+        entry: './src/app.js',
+        output: {
+            path: path.resolve(__dirname, 'public'),
+            filename: 'bundle.js'
+        },
+        plugins: [
+          new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: !isProduction ? '[name].css' : '[name].[hash].css',
+            chunkFilename: !isProduction ? '[id].css' : '[id].[hash].css',
+          }),
+        ],
+        module:{
+            rules:[
+                {
+                    test:/\.js$/,
+                    loader: 'babel-loader',
+                    exclude: /node_modules/
+                },
+                {
+                    test:/\.(sa|sc|c)ss$/,
+                    use: [
+                        isProduction ?
+                        {
+                          loader: MiniCssExtractPlugin.loader,
+                          options: {
+                            sourceMap: true,
+                            hmr: !isProduction
+                          }
+                        } : 
+                        {
+                          loader: "style-loader"
+                        },
+                        {
+                          loader: "css-loader",
+                          options: {
+                            sourceMap: true
+                          }
+                        },
+                        {
+                          loader: "sass-loader",
+                          options: {
+                            sourceMap: true
+                          }
+                        }
+                    ]
+                }
+            ]
+        },
+        devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+        devServer: {
+            contentBase: path.resolve(__dirname, 'public'),
+            historyApiFallback: true
+        }
+    };
 };
