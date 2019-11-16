@@ -13,12 +13,12 @@ exports[`should render an ExpenseListItem correctly 1`] = `
   </Link>
   <p>
      Amount : 
-    195000
+    $1,950.00
      
   </p>
   <p>
      Date : 
-    -345600000
+    28th December, 1969
      
   </p>
   <p>
