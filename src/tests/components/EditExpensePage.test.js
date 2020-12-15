@@ -16,9 +16,9 @@ beforeEach(() => {
             startRemoveExpense={startRemoveExpense}
             history={history}
         />);
-})
+});
 
-test('Should rendre EditExpensePage properly', ()=> {
+test('Should render EditExpensePage properly', ()=> {
     expect(wrapper).toMatchSnapshot();
 });
 
