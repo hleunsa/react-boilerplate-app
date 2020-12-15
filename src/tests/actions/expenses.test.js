@@ -1,7 +1,16 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { database } from '../../firebase/firebase';
-import { addExpense, editExpense, removeExpense, startAddExpense, setExpenses, startSetEnpenses } from '../../actions/expenses';
+import { 
+    addExpense,
+    editExpense, 
+    removeExpense, 
+    startAddExpense, 
+    setExpenses,
+    startSetEnpenses, 
+    startRemoveExpense, 
+    startEditExpense
+} from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 
 const createMockStore = configureMockStore([thunk]);
@@ -22,12 +31,45 @@ test ('should setup remove expense action', () => {
     });
 });
 
+test('should remove expense from database and store', (done) => {
+    const store = createMockStore({});
+    store.dispatch(startRemoveExpense(expenses[0].id)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: "REMOVE_EXPENSE",
+            id: expenses[0].id
+        })
+        return database.ref(`expenses/${expenses[0].id}`).once('value');
+    }).then((snapshot)=>{
+        expect(snapshot.val()).toBeNull();
+        done();
+    });
+});
+
 test ('should setup edit expense action', () => {
     const action = editExpense('djad23dj', {note: 'new note', description:'new description'});
     expect(action).toEqual({
         type: "EDIT_EXPENSE",
         id : 'djad23dj',
         updates: {note: 'new note', description:'new description'}
+    });
+});
+
+test('should update expense in database and store', (done) => {
+    const store = createMockStore({});
+    const updates = {note: 'new note', description:'new description'};
+    store.dispatch(startEditExpense(expenses[0].id, updates)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: "EDIT_EXPENSE",
+            id : expenses[0].id,
+            updates
+        })
+        return database.ref(`expenses/${expenses[0].id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val().note).toEqual(updates.note);
+        expect(snapshot.val().description).toEqual(updates.description);
+        done();
     });
 });
 
