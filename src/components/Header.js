@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { startLogout } from '../firebase/firebase';
+import { startLogout } from '../actions/auth';
 
 export const Header = ({startLogout}) => (
     <header>
         <h1>Expensify</h1>
-        <h2><NavLink to="/" activeClassName="is-active" exact={true} >Home</NavLink></h2>
-        <h2><NavLink to="/create" activeClassName="is-active">Create</NavLink></h2>
-        <h2><NavLink to="/help" activeClassName="is-active">Help</NavLink></h2>
+        <NavLink to="/dashboard" activeClassName="is-active" >Home</NavLink>
+        <NavLink to="/create" activeClassName="is-active">Create</NavLink>
         <button onClick={startLogout}>logout</button>
     </header>
 );

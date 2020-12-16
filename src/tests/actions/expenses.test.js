@@ -13,6 +13,7 @@ import {
 } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 
+const uid = "testUidkalmde";
 const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
@@ -20,7 +21,7 @@ beforeEach((done) => {
     expenses.forEach(({id, description, note, amount, createdAt}) => {
         expenseData[id] = {description, note, amount, createdAt};
     });
-    database.ref('expenses').set(expenseData).then(()=> done());
+    database.ref(`users/${uid}/expenses`).set(expenseData).then(()=> done());
 } );
 
 test ('should setup remove expense action', () => {
@@ -32,14 +33,14 @@ test ('should setup remove expense action', () => {
 });
 
 test('should remove expense from database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore({ auth: { uid } });
     store.dispatch(startRemoveExpense(expenses[0].id)).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({
             type: "REMOVE_EXPENSE",
             id: expenses[0].id
         })
-        return database.ref(`expenses/${expenses[0].id}`).once('value');
+        return database.ref(`users/${uid}/expenses/${expenses[0].id}`).once('value');
     }).then((snapshot)=>{
         expect(snapshot.val()).toBeNull();
         done();
@@ -56,7 +57,7 @@ test ('should setup edit expense action', () => {
 });
 
 test('should update expense in database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore({ auth: { uid } });
     const updates = {note: 'new note', description:'new description'};
     store.dispatch(startEditExpense(expenses[0].id, updates)).then(() => {
         const actions = store.getActions();
@@ -65,7 +66,7 @@ test('should update expense in database and store', (done) => {
             id : expenses[0].id,
             updates
         })
-        return database.ref(`expenses/${expenses[0].id}`).once('value');
+        return database.ref(`users/${uid}/expenses/${expenses[0].id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val().note).toEqual(updates.note);
         expect(snapshot.val().description).toEqual(updates.description);
@@ -84,7 +85,7 @@ test('should setup add expense action object with provided values', () => {
 });
 
 test('should add expense to database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore({ auth: { uid } });
     const expenseData = {
         description: 'Mouse',
         amount: 3000,
@@ -100,7 +101,7 @@ test('should add expense to database and store', (done) => {
                 ...expenseData
             }
         })
-        return database.ref(`expenses/${actions[0].expense.id}`).once('value');
+        return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseData);
         done();
@@ -110,7 +111,7 @@ test('should add expense to database and store', (done) => {
 
 
 test('should add expense to database and store with default values', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore({ auth: { uid } });
     const expenseData = {
         description: '',
         note: '',
@@ -126,7 +127,7 @@ test('should add expense to database and store with default values', (done) => {
                 ...expenseData
             }
         })
-        return database.ref(`expenses/${actions[0].expense.id}`).once('value');
+        return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseData);
         done();
@@ -144,7 +145,7 @@ test('should setup set expenses action object with data', () => {
 })
 
 test('should fetch the expenses from firebase', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore({ auth: { uid } });
     store.dispatch(startSetEnpenses()).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({
