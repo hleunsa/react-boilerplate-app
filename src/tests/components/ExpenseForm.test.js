@@ -19,7 +19,7 @@ test('should render error for invalid form submission', () => {
     wrapper.find('form').simulate('submit', {
         preventDefault: () => {}
     });
-    expect(wrapper.state('error')).toBe('Please enter a description and an Amount for your expense!');
+    expect(wrapper.state('error')).toBe('Please enter a description and an amount for your expense!');
 });
 
 test('should set description on input change', () => {
