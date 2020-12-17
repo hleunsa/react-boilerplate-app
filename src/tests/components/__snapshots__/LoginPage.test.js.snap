@@ -10,10 +10,10 @@ exports[`should render LoginPage properly 1`] = `
     <h1
       className="box-layout__title"
     >
-      Expensify App
+      Boilerplate App
     </h1>
     <p>
-      It's time to get your expenses under constrol.
+      Your boostrap app for react project
     </p>
     <button
       className="button"

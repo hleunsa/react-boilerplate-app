@@ -5,8 +5,8 @@ import { startLogin } from '../actions/auth';
 export const LoginPage = ({ startLogin }) => (
     <div className="box-layout">
         <div className="box-layout__box">
-            <h1 className="box-layout__title">Expensify App</h1>
-            <p>It's time to get your expenses under constrol.</p>
+            <h1 className="box-layout__title">Boilerplate App</h1>
+            <p>Your boostrap app for react project</p>
             <button className="button" onClick={startLogin}>Login with Google</button>
         </div>
     </div>

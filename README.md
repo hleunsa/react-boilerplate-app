@@ -1,7 +1,7 @@
 # Udemy The Complete React Developer Course (w/ Hooks and React)
 
 
-## Expensify Application
+## React Boilerplate  Application
 
 
 
