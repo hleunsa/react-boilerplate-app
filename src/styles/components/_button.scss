@@ -11,7 +11,11 @@
     text-decoration: none;
 }
 
+.button--secondary {
+    @extend .button;
+    background: #888;
+}
+
 .button--link {
     background: none;
-    
 }
